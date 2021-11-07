@@ -29,15 +29,16 @@
         <% } %>
             <ul>
                 <li><a href='/' title='Home'>Home</a></li>
-                <li><a href='/private'>Private Content (location of 5 most recent users)</a></li>
                 <% if (user.isAuthenticated) { %>
+                    <li><a href='/private'>Private Content (location of 5 most recent users)</a></li>
                     <li>
                         <form action='/logout' , method='get'>
                             <input type='submit' value='Logout <%= user.name %>' />
                         </form>
                     </li>
                     <% } else { %>
-                        <li><a href='/sign-up' title='Sign up'>Sign up</a></li>
+                        <li><a href='/login' title='Log in'>Log In</a></li>
+                        <li><a href='/sign-up' title='Sign up'>Sign Up</a></li>
                         <% } %>
             </ul>
             <p id="status"></p>

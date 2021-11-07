@@ -52,6 +52,12 @@ app.get('/private', requiresAuth(), function (req, res) {
     res.render('private', {user, recentUsers});
 });
 
+app.get("/login", (req, res) => {
+  res.oidc.login({
+    returnTo: '/'
+  });
+});
+
 app.get("/sign-up", (req, res) => {
   res.oidc.login({
     returnTo: '/',
