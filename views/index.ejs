@@ -73,8 +73,9 @@
 
                         //Store information about the user and the location
                         let user = JSON.parse('<%- userString %>')
+                        let appUrl = JSON.parse('<%- appUrl %>')
                         if (user.isAuthenticated) {
-                            fetch('https://localhost:4080/store', {
+                            fetch(`${appUrl}/store`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
