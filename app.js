@@ -48,7 +48,6 @@ app.get('/private', requiresAuth(), function (req, res) {
     recentUsers = Object.values(users)
     recentUsers.sort((a,b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0))
     recentUsers = JSON.stringify(recentUsers.slice(0, 5))
-    console.log(JSON.parse(recentUsers))
     res.render('private', {user, recentUsers});
 });
 
@@ -69,7 +68,7 @@ app.get("/sign-up", (req, res) => {
 
 app.post('/store', (req, res) => {
   users[req.body.user] = {
-    user: req.body.user,
+    name: req.body.user,
     timestamp: req.body.timestamp,
     longitude: req.body.longitude,
     latitude: req.body.latitude

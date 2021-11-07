@@ -44,7 +44,9 @@
         var users = JSON.parse('<%- recentUsers %>')
 
         users.forEach(u => {
-            L.marker({ lon: u.longitude, lat: u.latitude }).bindPopup(u.user).addTo(map)
+            L.marker({ lon: u.longitude, lat: u.latitude }).bindPopup(
+                `Username: ${u.name}. Last login at: ${(new Date(u.timestamp)).toLocaleString()}`
+            ).addTo(map)
         })
     </script>
 </body>
