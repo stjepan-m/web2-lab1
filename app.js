@@ -71,7 +71,9 @@ app.post('/store', (req, res) => {
 });
 
 if(process.env.PORT) {
-
+  app.listen(port, () => {
+    console.log(`Server running at ${process.env.APP_URL}:${port}/`);
+  })
 } else {
   https.createServer({
     key: fs.readFileSync('server.key'),
