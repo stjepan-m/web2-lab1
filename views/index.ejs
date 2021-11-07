@@ -75,7 +75,7 @@
                         let user = JSON.parse('<%- userString %>')
                         let appUrl = '<%- appUrl %>'
                         if (user.isAuthenticated) {
-                            fetch(`${appUrl}/store`, {
+                            fetch(`${appUrl}store`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'

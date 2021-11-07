@@ -39,7 +39,7 @@ app.get('/',  function (req, res) {
         req.user.name = req.oidc.user.name;
         req.user.timestamp = req.oidc.user.updated_at;
     }
-    let appUrl = process.env.APP_URL || `https://localhost:${port}`
+    let appUrl = process.env.APP_URL || `https://localhost:${port}/`
     res.render('index', {user : req.user, userString: JSON.stringify(req.user), appUrl});
 });
 
