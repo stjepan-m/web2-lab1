@@ -73,7 +73,7 @@
 
                         //Store information about the user and the location
                         let user = JSON.parse('<%- userString %>')
-                        let appUrl = JSON.parse('<%- appUrl %>')
+                        let appUrl = '<%- appUrl %>'
                         if (user.isAuthenticated) {
                             fetch(`${appUrl}/store`, {
                                 method: 'POST',
