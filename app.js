@@ -46,7 +46,7 @@ app.get('/',  function (req, res) {
 app.get('/private', requiresAuth(), function (req, res) {       
     const user = JSON.stringify(req.oidc.user);
     recentUsers = Object.values(users)
-    recentUsers.sort((a,b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0))
+    recentUsers.sort((a,b) => (a.timestamp < b.timestamp) ? 1 : ((b.timestamp < a.timestamp) ? -1 : 0))
     recentUsers = JSON.stringify(recentUsers.slice(0, 5))
     res.render('private', {user, recentUsers});
 });
