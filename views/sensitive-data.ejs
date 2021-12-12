@@ -74,15 +74,21 @@
             const databaseDiv = document.getElementById('database')
             let element = document.createElement("div")
             element.style.marginBottom = "10px"
-            if(safeMode)
-                element.appendChild(texts)
-            else
+            if(safeMode) {
+                // This wasn't supposed to be like this :/
+                let child = document.createElement("div")
+                child.style.marginTop = "5px"
+                child.innerHTML = texts
+                element.appendChild(child)
+            }  
+            else {
                 texts.forEach(text => {
                     let child = document.createElement("div")
                     child.style.marginTop = "5px"
                     child.innerHTML = text
                     element.appendChild(child)
                 });
+            }
             databaseDiv.appendChild(element)
         }
 
