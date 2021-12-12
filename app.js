@@ -68,7 +68,7 @@ app.get('/sensitive-data', requiresAuth(), function (req, res) {
   const user = JSON.stringify(req.oidc.user)
   let textsActual = []
   if (safeMode[0]) {
-    textsActual = "This was supposed to be encrypted, to show how sensitive data should actually be stored. But, I had problems with crypto libraries in js and I didn't implement it."
+    textsActual = "This was supposed to be encrypted, to show how sensitive data should actually be stored. But, I had problems with crypto libraries in js and I did not implement it."
   } else {
     textsActual = texts
   }
