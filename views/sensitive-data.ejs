@@ -69,16 +69,20 @@
 
         async function showDatabase() {
             let texts = JSON.parse('<%- database %>')
+            let safeMode = '<%- safeMode %>'
 
             const databaseDiv = document.getElementById('database')
             let element = document.createElement("div")
             element.style.marginBottom = "10px"
-            texts.forEach(text => {
-                let child = document.createElement("div")
-                child.style.marginTop = "5px"
-                child.innerHTML = text
-                element.appendChild(child)
-            });
+            if(safeMode)
+                element.appendChild(texts)
+            else
+                texts.forEach(text => {
+                    let child = document.createElement("div")
+                    child.style.marginTop = "5px"
+                    child.innerHTML = text
+                    element.appendChild(child)
+                });
             databaseDiv.appendChild(element)
         }
 
