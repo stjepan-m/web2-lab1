@@ -75,8 +75,9 @@ app.get('/sensitive-data', requiresAuth(), function (req, res) {
   res.render('sensitive-data', { safeMode: safeMode[0], user, appUrl, database: JSON.stringify(textsActual), texts: JSON.stringify(texts) });
 });
 
-app.get('/access-control', requiresAuth(), function (req, res) {
-
+app.get('/access-control', function (req, res) {
+  if(!req.oidc.isAuthenticated())
+    res.redirect('/login');
   let reqUser = req.query.user
   if (safeMode[2]) {
     if (reqUser === undefined)
