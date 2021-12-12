@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title> Access Control </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <a href='/' title='Home'>Home</a><br />
+    <h2>Safe Mode: <%= safeMode ? 'On' : 'Off' %> <button id="safe-mode-btn">Turn <%= safeMode ? 'Off' : 'On' %>
+            </button></h2>
+
+    <h2>Your Personal Information</h2>
+    <div><%=JSON.stringify(user)%></div>
+
+    <h2>Hint</h2>
+    <div>Try changing the user in the query string (user stjepan.mlakic@fer.hr also exists)</div>
+
+    <script>
+        document.getElementById('safe-mode-btn').addEventListener('click', toggleSafeMode);
+
+        async function toggleSafeMode() {
+            try {
+                let appUrl = '<%- appUrl %>'
+                let res = await fetch(`${appUrl}toggle-safe-mode`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        key: 2
+                    })
+                });
+                window.location.reload()
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        }
+    </script>
+</body>
+
+</html>

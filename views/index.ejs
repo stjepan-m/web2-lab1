@@ -1,110 +1,25 @@
 <html>
 
 <head>
-    <title> Auth & Map </title>
+    <title> Very Secure App </title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <style>
-        html,
-        body {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-
-        #map {
-            /* configure the size of the map */
-            width: 100%;
-            height: 80%;
-        }
-    </style>
 </head>
 
 <body>
+    <h2>Welcome to the most secure app ever made (or maybe not)</h2>
+    <div><a href="/sensitive-data">1. Sensitive Data Exposure</a></div>
+    <div><a href="/deserialization">2. Insecure Deserialization</a></div>
+    <div><a href="/access-control?user=<%= user.name %>">3. Broken Access Control</a></div>
     <% if (user.isAuthenticated) { %>
-        <h2>Welcome <%= user.name %>
-        </h2>
-        <% } %>
-            <ul>
-                <li><a href='/' title='Home'>Home</a></li>
-                <% if (user.isAuthenticated) { %>
-                    <li><a href='/private'>Private Content (location of 5 most recent users)</a></li>
-                    <li>
-                        <form action='/logout' , method='get'>
-                            <input type='submit' value='Logout <%= user.name %>' />
-                        </form>
-                    </li>
-                    <% } else { %>
-                        <li><a href='/login' title='Log in'>Log In</a></li>
-                        <li><a href='/sign-up' title='Sign up'>Sign Up</a></li>
-                        <% } %>
-            </ul>
-            <p id="status"></p>
-            <div id="map"></div>
-            <script>
-                function findLocation() {
-                    const status = document.querySelector('#status');
-
-                    function success(position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-
-                        status.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
-
-                        // initialize Leaflet
-                        var map = L.map('map', {
-                            center: [latitude, longitude],
-                            zoom: 15
-                        })
-
-                        // add the OpenStreetMap tiles
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            maxZoom: 19,
-                            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-                        }).addTo(map);
-
-                        // show the scale bar on the lower left corner
-                        L.control.scale({ imperial: true, metric: true }).addTo(map);
-
-
-                        // show a marker on the map
-                        L.marker({ lon: longitude, lat: latitude }).bindPopup('Your current location').addTo(map);
-
-                        //Store information about the user and the location
-                        let user = JSON.parse('<%- userString %>')
-                        let appUrl = '<%- appUrl %>'
-                        if (user.isAuthenticated) {
-                            fetch(`${appUrl}store`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    user: user.name,
-                                    timestamp: user.timestamp,
-                                    longitude,
-                                    latitude
-                                })
-                            });
-                        }
-                    }
-
-                    function error() {
-                        status.textContent = 'Unable to retrieve your location';
-                    }
-
-                    if (!navigator.geolocation) {
-                        status.textContent = 'Geolocation is not supported by your browser';
-                    } else {
-                        status.textContent = 'Locating…';
-                        navigator.geolocation.getCurrentPosition(success, error);
-                    }
-                }
-
-                findLocation()
-            </script>
+    <div>
+        <form action='/logout' , method='get'>
+            <input type='submit' value='Logout <%= user.name %>' />
+        </form>
+    </div>
+    <% } else { %>
+    <div style="margin-top: 20px"><a href='/login' title='Log in'>Log In</a></div>
+    <% } %>
 </body>
 
 </html>

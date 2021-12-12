@@ -1,0 +1,102 @@
+<html>
+
+<head>
+    <title> Sensitive Data Exposure </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <a href='/' title='Home'>Home</a><br />
+    <h2>Safe Mode: <%= safeMode ? 'On' : 'Off' %> <button id="safe-mode-btn">Turn <%= safeMode ? 'Off' : 'On' %>
+            </button></h2>
+
+    <div style="margin-bottom: 5px">
+        You can write your secret text below. It will be stored securely, don't worry.
+    </div>
+    <textarea id="secretText" rows="5" placeholder="Enter text here..." style="margin-bottom: 5px"></textarea><br />
+    <button id="submit-btn">Save Text</button>
+
+    <div id="database">
+        <button id="show-database">Show database</button>
+    </div>
+
+    <div id="texts">
+        <button id="show-texts">Show texts</button>
+    </div>
+    <script>
+        document.getElementById('safe-mode-btn').addEventListener('click', toggleSafeMode);
+        document.getElementById('submit-btn').addEventListener('click', submitText);
+        document.getElementById('show-database').addEventListener('click', showDatabase);
+        document.getElementById('show-texts').addEventListener('click', showTexts);
+
+        async function toggleSafeMode() {
+            try {
+                let appUrl = '<%- appUrl %>'
+                let res = await fetch(`${appUrl}toggle-safe-mode`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        key: 0
+                    })
+                });
+                window.location.reload()
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        }
+
+        async function submitText() {
+            try {
+                const text = document.getElementById("secretText").value
+                let appUrl = '<%- appUrl %>'
+                let res = await fetch(`${appUrl}submit-text`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text
+                    })
+                });
+                window.location.reload()
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        }
+
+        async function showDatabase() {
+            let texts = JSON.parse('<%- database %>')
+
+            const databaseDiv = document.getElementById('database')
+            let element = document.createElement("div")
+            element.style.marginBottom = "10px"
+            texts.forEach(text => {
+                let child = document.createElement("div")
+                child.style.marginTop = "5px"
+                child.innerHTML = text
+                element.appendChild(child)
+            });
+            databaseDiv.appendChild(element)
+        }
+
+        async function showTexts() {
+            let texts = JSON.parse('<%- texts %>')
+
+            const textsDiv = document.getElementById('texts')
+            let element = document.createElement("div")
+            element.style.marginBottom = "10px"
+            texts.forEach(text => {
+                let child = document.createElement("div")
+                child.style.marginTop = "5px"
+                child.innerHTML = text
+                element.appendChild(child)
+            });
+            textsDiv.appendChild(element)
+        }
+    </script>
+</body>
+
+</html>
